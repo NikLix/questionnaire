@@ -10,7 +10,7 @@ import java.sql.Statement;
 
 
 public class Connection_PostgresSQL {
-	// Данные для подключенния к БД
+	// Р”Р°РЅРЅС‹Рµ РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРЅРёСЏ Рє Р‘Р”
 	static final String DB_URL = "jdbc:postgresql://localhost:5432/db";
     static final String USER = "postgres";
     static final String PASS = "postgres";
@@ -27,24 +27,24 @@ public class Connection_PostgresSQL {
     static String insertTableSQL = "INSERT INTO list_questions"
 			+ "(answer_one, answer_two, answer_three, answer_four,true_answer,quest) " 
     		+ "VALUES"
-			+ "('Не правильный ответ','Не правильный ответ','Правильный ответ','Не правильный ответ',3,'Вопрос')";
+			+ "('РќРµ РїСЂР°РІРёР»СЊРЅС‹Р№ РѕС‚РІРµС‚','РќРµ РїСЂР°РІРёР»СЊРЅС‹Р№ РѕС‚РІРµС‚','РџСЂР°РІРёР»СЊРЅС‹Р№ РѕС‚РІРµС‚','РќРµ РїСЂР°РІРёР»СЊРЅС‹Р№ РѕС‚РІРµС‚',3,'Р’РѕРїСЂРѕСЃ')";
 			
     
 
 	private static Connection connect() {
     	Connection connection = null;
     	try {
-    		// Проверяем наличие Драйвера JDBC
+    		// РџСЂРѕРІРµСЂСЏРµРј РЅР°Р»РёС‡РёРµ Р”СЂР°Р№РІРµСЂР° JDBC
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e) {
-			System.out.println("PostgreSQL Driver не найден");
+			System.out.println("PostgreSQL Driver РЅРµ РЅР°Р№РґРµРЅ");
 			e.printStackTrace();
 		}
     	try {
-    		// Соединяемся с БД
+    		// РЎРѕРµРґРёРЅСЏРµРјСЃСЏ СЃ Р‘Р”
 			connection = DriverManager.getConnection(DB_URL, USER, PASS);
 		} catch (SQLException e) {
-			System.out.println("Не возможно соединиться с DataBase PostgreSQL");
+			System.out.println("РќРµ РІРѕР·РјРѕР¶РЅРѕ СЃРѕРµРґРёРЅРёС‚СЊСЃСЏ СЃ DataBase PostgreSQL");
 			e.printStackTrace();
 		}
     	
@@ -53,10 +53,10 @@ public class Connection_PostgresSQL {
 	
 	public  ResultSet select(String sql) {
 	    try {
-	    	// Соединяемся с БД
+	    	// РЎРѕРµРґРёРЅСЏРµРјСЃСЏ СЃ Р‘Р”
 			Connection conn = connect();
 			Statement statement = conn.createStatement();
-			// Проверяем есть ли Таблица если нет то создаем её и добавляем в неё данные
+			// РџСЂРѕРІРµСЂСЏРµРј РµСЃС‚СЊ Р»Рё РўР°Р±Р»РёС†Р° РµСЃР»Рё РЅРµС‚ С‚Рѕ СЃРѕР·РґР°РµРј РµС‘ Рё РґРѕР±Р°РІР»СЏРµРј РІ РЅРµС‘ РґР°РЅРЅС‹Рµ
 			DatabaseMetaData dbm = conn.getMetaData();
 			ResultSet tables = dbm.getTables(null, null, "list_questions", null);
 			
@@ -65,7 +65,7 @@ public class Connection_PostgresSQL {
 				statement.execute(createTableSQL); 
 				statement.executeUpdate(insertTableSQL); 
 			}
-			// выполняем запрос на выборку данных
+			// РІС‹РїРѕР»РЅСЏРµРј Р·Р°РїСЂРѕСЃ РЅР° РІС‹Р±РѕСЂРєСѓ РґР°РЅРЅС‹С…
 			ResultSet rs = statement.executeQuery(sql);
 			return rs;
 		} catch (SQLException e) {

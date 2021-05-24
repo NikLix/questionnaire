@@ -12,11 +12,11 @@ import main.sql.Connection_PostgresSQL;
 @SuppressWarnings("serial")
 public class Interface extends JFrame{
 	
-	// Создаем переменные и элементы  
+	// РЎРѕР·РґР°РµРј РїРµСЂРµРјРµРЅРЅС‹Рµ Рё СЌР»РµРјРµРЅС‚С‹  
 	Integer true_answer = 1;
 	Integer count = 1;
 	Integer count_true_ans = 0; 
-	JButton button = new JButton("Ответить");
+	JButton button = new JButton("РћС‚РІРµС‚РёС‚СЊ");
 	
 	JLabel  label_quest = new JLabel("");
 	JLabel  label_count_true_ans = new JLabel("");
@@ -27,10 +27,10 @@ public class Interface extends JFrame{
 		
 	
 	public Interface () {
-		super("Вопросник");
+		super("Р’РѕРїСЂРѕСЃРЅРёРє");
 		Update_data(count);
 		
-		// Задаем размеры окна и отображение форм 1 столбец 7 строк
+		// Р—Р°РґР°РµРј СЂР°Р·РјРµСЂС‹ РѕРєРЅР° Рё РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ С„РѕСЂРј 1 СЃС‚РѕР»Р±РµС† 7 СЃС‚СЂРѕРє
 		this.setBounds(300,300,450,300);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -40,7 +40,7 @@ public class Interface extends JFrame{
 	
 		container.add(label_quest);
 		container.add(label_count_true_ans);
-		// Добавляем RadioButton в одну группу
+		// Р”РѕР±Р°РІР»СЏРµРј RadioButton РІ РѕРґРЅСѓ РіСЂСѓРїРїСѓ
 		ButtonGroup group = new ButtonGroup();
 		group.add(answer1);
 		group.add(answer2);
@@ -53,13 +53,13 @@ public class Interface extends JFrame{
 		container.add(answer3);
 		container.add(answer4);
 		
-		// Создаем событие которое будет выполняться при нажатии на кнопку
+		// РЎРѕР·РґР°РµРј СЃРѕР±С‹С‚РёРµ РєРѕС‚РѕСЂРѕРµ Р±СѓРґРµС‚ РІС‹РїРѕР»РЅСЏС‚СЊСЃСЏ РїСЂРё РЅР°Р¶Р°С‚РёРё РЅР° РєРЅРѕРїРєСѓ
 		button.addActionListener(new ButtonEvenListener ());
 		container.add(button);
 	}
 	
-	/* Метод выполняет Select запрос и
-	 * добавляет полученные данные к элементам  
+	/* РњРµС‚РѕРґ РІС‹РїРѕР»РЅСЏРµС‚ Select Р·Р°РїСЂРѕСЃ Рё
+	 * РґРѕР±Р°РІР»СЏРµС‚ РїРѕР»СѓС‡РµРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ Рє СЌР»РµРјРµРЅС‚Р°Рј  
 	 *  */
 	public void Update_data(Integer count) {	
 		Connection_PostgresSQL conn =  new Connection_PostgresSQL();
@@ -68,16 +68,17 @@ public class Interface extends JFrame{
 				+ "FROM list_questions WHERE id ="+count
 				+ "");
 		try {
-			// Проверяем есть ли еще данные по запросу
+			// РџСЂРѕРІРµСЂСЏРµРј РµСЃС‚СЊ Р»Рё РµС‰Рµ РґР°РЅРЅС‹Рµ РїРѕ Р·Р°РїСЂРѕСЃСѓ
 			if(!rs.isBeforeFirst()) {
-				label_quest.setText("Вопросов больше нет" );
-				double res = count_true_ans / (count-1);
-				// Считаем процент правильных ответов если больше 70% то считаем что пользователь сдал тест
+				count -= 1;
+				label_quest.setText("Р’РѕРїСЂРѕСЃРѕРІ Р±РѕР»СЊС€Рµ РЅРµС‚" );
+				double res = count_true_ans.doubleValue() / (count.doubleValue());
+				// РЎС‡РёС‚Р°РµРј РїСЂРѕС†РµРЅС‚ РїСЂР°РІРёР»СЊРЅС‹С… РѕС‚РІРµС‚РѕРІ РµСЃР»Рё Р±РѕР»СЊС€Рµ 70% С‚Рѕ СЃС‡РёС‚Р°РµРј С‡С‚Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЃРґР°Р» С‚РµСЃС‚
 				if (res>0.7) {
-					label_count_true_ans.setText("Количество правильных ответов "+count_true_ans+" Тест сдан");
+					label_count_true_ans.setText("РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂР°РІРёР»СЊРЅС‹С… РѕС‚РІРµС‚РѕРІ "+count_true_ans+" РўРµСЃС‚ СЃРґР°РЅ");
 				}
 				else {
-					label_count_true_ans.setText("Количество правильных ответов "+count_true_ans+" Тест не сдан");
+					label_count_true_ans.setText("РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂР°РІРёР»СЊРЅС‹С… РѕС‚РІРµС‚РѕРІ "+count_true_ans+" РўРµСЃС‚ РЅРµ СЃРґР°РЅ");
 				}
 				answer1.setVisible(false);
 				answer2.setVisible(false);
@@ -90,7 +91,7 @@ public class Interface extends JFrame{
 			while (rs.next()) {
 			String quest = rs.getString("quest");
 			label_quest.setText(quest);
-			label_count_true_ans.setText("Количество правильных ответов "+count_true_ans);
+			label_count_true_ans.setText("РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂР°РІРёР»СЊРЅС‹С… РѕС‚РІРµС‚РѕРІ "+count_true_ans);
 			answer1.setText(rs.getString("answer_one"));
 			answer2.setText(rs.getString("answer_two"));
 			answer3.setText(rs.getString("answer_three"));
@@ -101,7 +102,7 @@ public class Interface extends JFrame{
 			
 			
 		} catch (SQLException e2) {
-			System.out.println("При выполнении запроса возникли ошибки");
+			System.out.println("РџСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР° РІРѕР·РЅРёРєР»Рё РѕС€РёР±РєРё");
 			e2.printStackTrace();
 		}
 	}
@@ -110,8 +111,8 @@ public class Interface extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Проверяем как ответил пользователь с правильным ответом
-			// Сообщаем ему об этом
+			// РџСЂРѕРІРµСЂСЏРµРј РєР°Рє РѕС‚РІРµС‚РёР» РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЃ РїСЂР°РІРёР»СЊРЅС‹Рј РѕС‚РІРµС‚РѕРј
+			// РЎРѕРѕР±С‰Р°РµРј РµРјСѓ РѕР± СЌС‚РѕРј
 			if(answer1.isSelected() && true_answer == 1){
 				TrueAnswer(answer1.getText());
 			}
@@ -127,19 +128,19 @@ public class Interface extends JFrame{
 	        else {
 	        	count += 1;
 	        	Update_data(count);
-	        	String message = "Не правильный ответ";
+	        	String message = "РќРµ РїСЂР°РІРёР»СЊРЅС‹Р№ РѕС‚РІРµС‚";
 				JOptionPane.showMessageDialog(null, message,"OutPut",JOptionPane.CANCEL_OPTION);
 	        }
 			
 		}
-		// Метод если пользователь ответил верно 
+		// РњРµС‚РѕРґ РµСЃР»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РѕС‚РІРµС‚РёР» РІРµСЂРЅРѕ 
 		public void TrueAnswer(String ans) {
 			count += 1;
 			count_true_ans += 1;
 			Update_data(count);
 			
 			
-			String message = "Правильно, ответ был '";
+			String message = "РџСЂР°РІРёР»СЊРЅРѕ, РѕС‚РІРµС‚ Р±С‹Р» '";
 			message += ans + "'";
 			JOptionPane.showMessageDialog(null, message,"OutPut",JOptionPane.CANCEL_OPTION);
 		}
