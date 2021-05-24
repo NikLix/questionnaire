@@ -14,7 +14,6 @@ public class Connection_PostgresSQL {
 	static final String DB_URL = "jdbc:postgresql://localhost:5432/db";
     static final String USER = "postgres";
     static final String PASS = "postgres";
-    static final String selectSQL = "";
     static String createTableSQL = "CREATE TABLE IF NOT EXISTS list_questions"
 			+ "    (id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 )"
 			+ "    ,answer_one text"
@@ -60,13 +59,14 @@ public class Connection_PostgresSQL {
 			// Проверяем есть ли Таблица если нет то создаем её и добавляем в неё данные
 			DatabaseMetaData dbm = conn.getMetaData();
 			ResultSet tables = dbm.getTables(null, null, "list_questions", null);
+			
 			if (!tables.next()){
 				statement = conn.createStatement(); 
 				statement.execute(createTableSQL); 
 				statement.executeUpdate(insertTableSQL); 
 			}
 			// выполняем запрос на выборку данных
-			ResultSet rs = statement.executeQuery(selectSQL);
+			ResultSet rs = statement.executeQuery(sql);
 			return rs;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
